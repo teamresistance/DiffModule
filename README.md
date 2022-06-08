@@ -13,5 +13,5 @@ One I know I <b>AM</b> the issue on one.  I didn't want to have a repo for each 
 2022/06/03 Rev: 0.2 - Start isolating code modules  
 2022/06/05 Rev: 0.3 - Move modules to classes  
 2022/06/07 Rev: 0.4 - PotA is speed (Y) & potB is rotation (X).    
-                    - Rescale pots to +/- 1.0.  
-                    - Motor takes +/- 1.0
+.                   - Rescale pots to +/- 1.0.  
+.                   - Motor takes +/- 1.0
