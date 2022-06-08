@@ -7,7 +7,8 @@
  * 2022/06/03 Rev: 0.2 - Start isolating code modules
  * 2022/06/05 Rev: 0.3 - Move modules to classes
  * 2022/06/07 Rev: 0.4 - Rescale pots to +/- 1.0.  PotA is speed (Y) & potB is rotation (X).
- * <p> Motor takes +/- 1.0
+ * <p>                   Motor takes +/- 1.0.  MtrA<=Spd+rot+corr, mtrB<=Spd - Rot - Corr.
+ * <p>                   Move minInput & minSig to MotorControl
  *
  * This is to test the differential swerve module motors and interaction.
  * It is 3d printed and mechanically not tight but good for demo purposes.
@@ -25,20 +26,20 @@
 
 // Variables
 double mtrs_Spd = 0.0;
-double mtrs_Cor = 0.10;
+double mtrs_Cor = 0.0;
 double mots_Trn = 0.0;
 bool prtDiag = true;
 // Objects
 ScalePot potA = ScalePot(kMtrA_PotPin);	//Define function to read potentiometer and scale.
 ScalePot potB = ScalePot(kMtrB_PotPin);	//Define function to read potentiometer and scale.
-MotorControl mtrA = MotorControl(kMtrA_FwdPin, kMtrA_RevPin, kMtrA_SpdPin, 0.1, 0.5);	//Motor A controller
-MotorControl mtrB = MotorControl(kMtrB_FwdPin, kMtrB_RevPin, kMtrB_SpdPin, 0.1, 0.5);	//Motor B controller
+MotorControl mtrA = MotorControl(kMtrA_FwdPin, kMtrA_RevPin, kMtrA_SpdPin, 0.1, 0.55);	//Motor A controller
+MotorControl mtrB = MotorControl(kMtrB_FwdPin, kMtrB_RevPin, kMtrB_SpdPin, 0.1, 0.45);	//Motor B controller
 
-#line 35 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
+#line 36 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
 void setup();
-#line 47 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
+#line 48 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
 void loop();
-#line 35 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
+#line 36 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
 void setup()
 {
 	// put your setup code here, to run once:
@@ -60,12 +61,12 @@ void loop()
 	if(prtDiag) Serial.println();
 	//=================== Motor A =========================
 	//Read and scale the pot then issue motor cmds.  Direction & speed.
-	mtrA.cmdMotor(mtrs_Spd + mots_Trn + mtrs_Cor);
+	mtrA.cmdMotor(mtrs_Spd * (1.0 + mots_Trn) + mtrs_Cor);
     if(prtDiag) Serial.print("  \t||\t  ");
 
 	//=================== Motor B =========================
 	//Read and scale the pot then issue motor cmds.  Direction & speed.
-	mtrB.cmdMotor(mtrs_Spd - mots_Trn - mtrs_Cor);
+	mtrB.cmdMotor(mtrs_Spd * (1.0 - mots_Trn) - mtrs_Cor);
     if(prtDiag) Serial.println();
   
 	delay(1000);
