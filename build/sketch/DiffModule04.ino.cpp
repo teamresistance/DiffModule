@@ -1,3 +1,5 @@
+#include <Arduino.h>
+#line 1 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
 /*
  * Author: Jim Hofmann
  * History
@@ -5,8 +7,7 @@
  * 2022/06/03 Rev: 0.2 - Start isolating code modules
  * 2022/06/05 Rev: 0.3 - Move modules to classes
  * 2022/06/07 Rev: 0.4 - Rescale pots to +/- 1.0.  PotA is speed (Y) & potB is rotation (X).
- * <p>                   Motor takes +/- 1.0.  MtrA<=Spd+rot+corr, mtrB<=Spd - Rot - Corr.
- * <p>                   Move minInput & minSig to MotorControl
+ * <p> Motor takes +/- 1.0
  *
  * This is to test the differential swerve module motors and interaction.
  * It is 3d printed and mechanically not tight but good for demo purposes.
@@ -33,6 +34,11 @@ ScalePot potB = ScalePot(kMtrB_PotPin);	//Define function to read potentiometer 
 MotorControl mtrA = MotorControl(kMtrA_FwdPin, kMtrA_RevPin, kMtrA_SpdPin, 0.1, 0.5);	//Motor A controller
 MotorControl mtrB = MotorControl(kMtrB_FwdPin, kMtrB_RevPin, kMtrB_SpdPin, 0.1, 0.5);	//Motor B controller
 
+#line 35 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
+void setup();
+#line 47 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
+void loop();
+#line 35 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
 void setup()
 {
 	// put your setup code here, to run once:
@@ -64,4 +70,5 @@ void loop()
   
 	delay(1000);
 }
+
 

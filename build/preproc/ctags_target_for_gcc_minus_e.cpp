@@ -1,4 +1,4 @@
-# 1 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule01\\DiffModule01.ino"
+# 1 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
 /*
 
  * Author: Jim Hofmann
@@ -7,11 +7,19 @@
 
  * 2022/06/03 Rev: 0.1 - Test motors and interaction using pots.
 
- * 
+ * 2022/06/03 Rev: 0.2 - Start isolating code modules
 
- * This is to test the differential swerve module motors and interaction.  
+ * 2022/06/05 Rev: 0.3 - Move modules to classes
 
- * It is 3d printed and mechanically not tight but good for demo purposes.  
+ * 2022/06/07 Rev: 0.4 - Rescale pots to +/- 1.0.  PotA is speed (Y) & potB is rotation (X).
+
+ * <p> Motor takes +/- 1.0
+
+ *
+
+ * This is to test the differential swerve module motors and interaction.
+
+ * It is 3d printed and mechanically not tight but good for demo purposes.
 
  * I am running 2 TT motors (3 - 6 VDC) thru a L298N motor(s) controller.  PS is a buck convertor set at 7.2 vdc.
 
@@ -25,99 +33,52 @@
 
  * pwm, 25, to move the motor, 3 vdc to 255, 6 vdc.
 
-*/
-# 16 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule01\\DiffModule01.ino"
-const uint8_t kMtrA_FwdPin = 4; //Motor A pin assignments
-const uint8_t mtrA_RevPin = 5;
-const uint8_t mtrA_SpdPin = 6;
-const uint8_t mtrA_PotPin = A0;
+ */
+# 19 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
+// Include files & classes
+# 21 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino" 2
+# 22 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino" 2
+# 23 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino" 2
 
-const uint8_t mtrB_FwdPin = 8; //Motor B pin assignments
-const uint8_t mtrB_RevPin = 9;
-const uint8_t mtrB_SpdPin = 10;
-const uint8_t mtrB_PotPin = A1;
-
-int16_t mtrA_Sig = 0; //Cmd signals
-int16_t mtrB_Sig = 0;
+// Variables
+double mtrs_Spd = 0.0;
+double mtrs_Cor = 0.10;
+double mots_Trn = 0.0;
+bool prtDiag = true;
+// Objects
+ScalePot potA = ScalePot(kMtrA_PotPin); //Define function to read potentiometer and scale.
+ScalePot potB = ScalePot(kMtrB_PotPin); //Define function to read potentiometer and scale.
+MotorControl mtrA = MotorControl(kMtrA_FwdPin, kMtrA_RevPin, kMtrA_SpdPin, 0.1, 0.5); //Motor A controller
+MotorControl mtrB = MotorControl(kMtrB_FwdPin, kMtrB_RevPin, kMtrB_SpdPin, 0.1, 0.5); //Motor B controller
 
 void setup()
 {
  // put your setup code here, to run once:
-  Serial.begin(9600);
-  Serial.println("Hello!");
-  delay(2000);
+ Serial.begin(57600);
+ Serial.println("Hello!");
 
- pinMode(kMtrA_FwdPin, 0x1); //Define DIO type
- pinMode(mtrA_RevPin, 0x1);
- pinMode(mtrA_SpdPin, 0x1);
+ ScalePot::prtDiag = prtDiag;
+ MotorControl::prtDiag = prtDiag;
+ delay(2000);
 
- pinMode(mtrB_FwdPin, 0x1);
- pinMode(mtrB_RevPin, 0x1);
- pinMode(mtrB_SpdPin, 0x1);
 }
 
 void loop()
 {
  // put your main code here, to run repeatedly:
+ mtrs_Spd = potA.readPot();
+ if(prtDiag) Serial.print(" \t");
+ mots_Trn = potB.readPot();
+ if(prtDiag) Serial.println();
+ //=================== Motor A =========================
+ //Read and scale the pot then issue motor cmds.  Direction & speed.
+ mtrA.cmdMotor(mtrs_Spd + mots_Trn + mtrs_Cor);
+    if(prtDiag) Serial.print("  \t||\t  ");
 
-  //=================== Motor A =========================
-  mtrA_Sig = analogRead(mtrA_PotPin); //Read Pot for motor A
-  Serial.print("PotA - "); Serial.print(mtrA_Sig);
+ //=================== Motor B =========================
+ //Read and scale the pot then issue motor cmds.  Direction & speed.
+ mtrB.cmdMotor(mtrs_Spd - mots_Trn - mtrs_Cor);
+    if(prtDiag) Serial.println();
 
-  mtrA_Sig -= 511; //and rescale -511 to 512
-  Serial.print(" => "); Serial.print(mtrA_Sig);
-
- // Controlling spin direction of motors:
- if (mtrA_Sig < -50){ //Negative DB
-    mtrA_Sig = map(mtrA_Sig, -511, -50, 255, 125); //Rescale from DB => min torque
-  digitalWrite(kMtrA_FwdPin, 0x0);
-  digitalWrite(mtrA_RevPin, 0x1);
- }else if (mtrA_Sig > 50){ //Positive DB
-    mtrA_Sig = map(mtrA_Sig, 50, 512, 125, 255); //Rescale from DB => min torque
-  digitalWrite(kMtrA_FwdPin, 0x1);
-  digitalWrite(mtrA_RevPin, 0x0);
- }else{ //Within DB
-    mtrA_Sig = 0;
-  digitalWrite(kMtrA_FwdPin, 0x0);
-  digitalWrite(mtrA_RevPin, 0x0);
- }
-  // Controlling speed (0 = off and 255 = max speed):
-  analogWrite(mtrA_SpdPin, mtrA_Sig); // ENA pin
-
-  Serial.print("    ");
-  Serial.print("A Fwd - "); Serial.print(digitalRead(kMtrA_FwdPin)); Serial.print(" / Rev - "); Serial.print(digitalRead(mtrA_RevPin));
-  Serial.print(" / Sig - "); Serial.print(mtrA_Sig);
-
-
-  //=================== Motor B =========================
-    mtrB_Sig = analogRead(mtrB_PotPin); //Read Pot for motor B
-    Serial.print("    ||    ");
-    Serial.print("PotB - "); Serial.print(mtrB_Sig);
-
-    mtrB_Sig -= 511; //and rescale -511 to 512
-    Serial.print(" => "); Serial.print(mtrB_Sig);
-
-
- // Controlling spin direction of motors:
- if (mtrB_Sig < -50){ //Negative DB
-    mtrB_Sig = map(mtrB_Sig, -511, -50, 255, 125); //Rescale from DB => min torque
-  digitalWrite(mtrB_FwdPin, 0x0);
-  digitalWrite(mtrB_RevPin, 0x1);
- }else if (mtrB_Sig > 50){ //Positive DB
-    mtrB_Sig = map(mtrB_Sig, 50, 512, 125, 255); //Rescale from DB => min torque
-  digitalWrite(mtrB_FwdPin, 0x1);
-  digitalWrite(mtrB_RevPin, 0x0);
- }else{ //Within DB
-    mtrB_Sig = 0;
-  digitalWrite(mtrB_FwdPin, 0x0);
-  digitalWrite(mtrB_RevPin, 0x0);
- }
- // Controlling speed (0 = off and 255 = max speed):
- analogWrite(mtrB_SpdPin, mtrB_Sig); // ENA pin
-
-  Serial.print("    ");
-  Serial.print("B Fwd - "); Serial.print(digitalRead(mtrB_FwdPin)); Serial.print(" / Rev - "); Serial.print(digitalRead(mtrB_RevPin));
-  Serial.print(" / Sig - "); Serial.println(mtrB_Sig);
-
-  delay(1000);
+ delay(1000);
 }
