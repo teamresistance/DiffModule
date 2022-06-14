@@ -15,11 +15,12 @@
 class ScalePot
 {
   public:
-    ScalePot(int _potPin);
+    ScalePot(int _potPin, double _potDB = 0.10);
     double readPot();
     static bool prtDiag;
   private:
     int potPin;
+    double potDB;
 };
 
 #endif

@@ -20,14 +20,13 @@
 class MotorControl
 {
   public:
-    MotorControl(int, int, int, double, double);
+    MotorControl(int, int, int, double);
     void cmdMotor(double);
     static bool prtDiag;
   private:
     int fwdPin;
     int revPin;
     int sigPin;
-    double inDB;
     double minSig;
 };
 

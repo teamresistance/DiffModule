@@ -27,13 +27,13 @@
 // Variables
 double mtrs_Spd = 0.0;
 double mtrs_Cor = 0.0;
-double mots_Trn = 0.0;
+double mtrs_Trn = 0.0;
 bool prtDiag = true;
 // Objects
-ScalePot potA = ScalePot(kMtrA_PotPin);	//Define function to read potentiometer and scale.
+ScalePot potA = ScalePot(kMtrA_PotPin, 0.05);	//Define function to read potentiometer and scale.
 ScalePot potB = ScalePot(kMtrB_PotPin);	//Define function to read potentiometer and scale.
-MotorControl mtrA = MotorControl(kMtrA_FwdPin, kMtrA_RevPin, kMtrA_SpdPin, 0.1, 0.55);	//Motor A controller
-MotorControl mtrB = MotorControl(kMtrB_FwdPin, kMtrB_RevPin, kMtrB_SpdPin, 0.1, 0.45);	//Motor B controller
+MotorControl mtrA = MotorControl(kMtrA_FwdPin, kMtrA_RevPin, kMtrA_SpdPin, 0.55);	//Motor A controller
+MotorControl mtrB = MotorControl(kMtrB_FwdPin, kMtrB_RevPin, kMtrB_SpdPin, 0.45);	//Motor B controller
 
 #line 36 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
 void setup();
@@ -57,16 +57,16 @@ void loop()
 	// put your main code here, to run repeatedly:
 	mtrs_Spd = potA.readPot();
 	if(prtDiag) Serial.print(" \t");
-	mots_Trn = potB.readPot();
+	mtrs_Trn = potB.readPot();
 	if(prtDiag) Serial.println();
 	//=================== Motor A =========================
 	//Read and scale the pot then issue motor cmds.  Direction & speed.
-	mtrA.cmdMotor(mtrs_Spd * (1.0 + mots_Trn) + mtrs_Cor);
+	mtrA.cmdMotor(mtrs_Spd * (1.0 + mtrs_Trn) + mtrs_Cor);
     if(prtDiag) Serial.print("  \t||\t  ");
 
 	//=================== Motor B =========================
 	//Read and scale the pot then issue motor cmds.  Direction & speed.
-	mtrB.cmdMotor(mtrs_Spd * (1.0 - mots_Trn) - mtrs_Cor);
+	mtrB.cmdMotor(mtrs_Spd * (1.0 - mtrs_Trn) - mtrs_Cor);
     if(prtDiag) Serial.println();
   
 	delay(1000);
