@@ -17,7 +17,7 @@
 
  * <p>                   Move minInput & minSig to MotorControl
 
- * 2022/06/13 Rev: 0.4a -Move inDB back to pot.  Motor scales 0.0+ - 1.0 to minOut to 1.0.
+ * 2022/06/13 Rev: 0.4a - Move inDB back to pot.  Motor scales 0.0+ - 1.0 to minOut to 1.0.
 
  *
 

@@ -15,3 +15,4 @@ One I know I <b>AM</b> the issue on one.  I didn't want to have a repo for each 
 2022/06/07 Rev: 0.4 - Rescale pots to +/- 1.0.  PotA is speed (Y) & potB is rotation (X).    
 .                   - Motor takes +/- 1.0.  MtrA<=Spd+rot+corr, mtrB<=Spd - Rot - Corr.
 .                   - Move minInput & minSig to MotorControl
+2022/06/13 Rev: 0.4a - Move inDB back to pot.  Motor scales 0.0+ - 1.0 to minOut to 1.0.
