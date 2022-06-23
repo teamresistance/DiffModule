@@ -9,6 +9,7 @@
  * 2022/06/07 Rev: 0.4 - Rescale pots to +/- 1.0.  PotA is speed (Y) & potB is rotation (X).
  * <p>                   Motor takes +/- 1.0.  MtrA<=Spd+rot+corr, mtrB<=Spd - Rot - Corr.
  * <p>                   Move minInput & minSig to MotorControl
+ * 2022/06/13 Rev: 0.4a -Move inDB back to pot.  Motor scales 0.0+ - 1.0 to minOut to 1.0.
  *
  * This is to test the differential swerve module motors and interaction.
  * It is 3d printed and mechanically not tight but good for demo purposes.
@@ -25,21 +26,21 @@
 #include "MotorControl.h"	//Issue motor commands
 
 // Variables
-double mtrs_Spd = 0.0;
-double mtrs_Cor = 0.0;
-double mtrs_Trn = 0.0;
+double mtrs_Spd = 0.0;	//Motors Speed +/-1.0
+double mtrs_Cor = 0.0;	//Coorection to be added to A and subtracted from B to equalize at 0 turn
+double mtrs_Trn = 0.0;	//Turn ratio.  Simple mult. complement by Spd and add to ASpd and minus BSpd.
 bool prtDiag = true;
 // Objects
-ScalePot potA = ScalePot(kMtrA_PotPin, 0.05);	//Define function to read potentiometer and scale.
-ScalePot potB = ScalePot(kMtrB_PotPin);	//Define function to read potentiometer and scale.
-MotorControl mtrA = MotorControl(kMtrA_FwdPin, kMtrA_RevPin, kMtrA_SpdPin, 0.55);	//Motor A controller
+ScalePot potA = ScalePot(kMtrA_PotPin);	//Potentiometer scaled +/-1.0 w/DB (default 0.10).
+ScalePot potB = ScalePot(kMtrB_PotPin, 0.05);	//Potentiometer scaled +/-1.0 w/DB (default 0.10).
+MotorControl mtrA = MotorControl(kMtrA_FwdPin, kMtrA_RevPin, kMtrA_SpdPin, 0.45);	//Motor A controller
 MotorControl mtrB = MotorControl(kMtrB_FwdPin, kMtrB_RevPin, kMtrB_SpdPin, 0.45);	//Motor B controller
 
-#line 36 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
+#line 37 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
 void setup();
-#line 48 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
+#line 49 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
 void loop();
-#line 36 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
+#line 37 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
 void setup()
 {
 	// put your setup code here, to run once:
@@ -69,7 +70,7 @@ void loop()
 	mtrB.cmdMotor(mtrs_Spd * (1.0 - mtrs_Trn) - mtrs_Cor);
     if(prtDiag) Serial.println();
   
-	delay(1000);
+	delay(500);
 }
 
 

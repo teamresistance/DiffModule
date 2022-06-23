@@ -15,9 +15,9 @@ MotorControl::MotorControl(int _fwdPin, int _revPin, int _sigPin, double _minSig
     sigPin = _sigPin;
 	minSig = _minSig;
 
-	pinMode(fwdPin, OUTPUT); // Define DIO type
+	pinMode(fwdPin, OUTPUT); 	// Define DIO type
 	pinMode(revPin, OUTPUT);
-	pinMode(sigPin, OUTPUT);
+	pinMode(sigPin, OUTPUT);	//PWM
 
 }
 

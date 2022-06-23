@@ -3,12 +3,11 @@
 
 /**
  * @brief Read potentiometer, apply +/-DB around center (0.0) 
- * and scale from min to rotate motor to 1.0.
+ * and scale from DB -1.0 to 0.0 - 1.0.
  * 
  * @param _potPin analog pin (A0 - A5) to read 
  * @param _inDB   deadband for anaIn signal (0.0 - 1.0), returns 0.
- * @param _sigMin min motor signal returned if not in DB (0.0 - 1.0)
- * @return int - signed signal to send motor (+/- 1.0)
+ * @return Signed signal (+/- 1.0)
  */
 ScalePot::ScalePot(int _potPin, double _potDB)
 {
@@ -19,9 +18,9 @@ ScalePot::ScalePot(int _potPin, double _potDB)
 bool ScalePot::prtDiag = false;	 // Print diagnostics
 
 /**
- * @brief Read the pot value, apply a DB then scale min speed to max, 255. 
+ * @brief Read the pot value, apply a DB then scale 0 - 1024 to +/- 1.0. 
  * 
- * @return int Sign scaled signal.
+ * @return Sign scaled signal.
  */
 double ScalePot::readPot() {
 	//=================== Motor X =========================

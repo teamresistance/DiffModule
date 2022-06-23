@@ -13,7 +13,6 @@
  * @param _fwdPin assigned pin for forward cmd
  * @param _revPin assigned pin for reverse cmd
  * @param _sigPin assigned pin for speed signal cmd
- * @param _inDB   deadband for anaIn signal (0 - 1.0), return 0.
  * @param _sigMin - min motor signal returned if not in DB.
  * 
  */

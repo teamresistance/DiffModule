@@ -17,6 +17,8 @@
 
  * <p>                   Move minInput & minSig to MotorControl
 
+ * 2022/06/13 Rev: 0.4a -Move inDB back to pot.  Motor scales 0.0+ - 1.0 to minOut to 1.0.
+
  *
 
  * This is to test the differential swerve module motors and interaction.
@@ -36,21 +38,21 @@
  * pwm, 25, to move the motor, 3 vdc to 255, 6 vdc.
 
  */
-# 20 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
+# 21 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
 // Include files & classes
-# 22 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino" 2
 # 23 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino" 2
 # 24 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino" 2
+# 25 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino" 2
 
 // Variables
-double mtrs_Spd = 0.0;
-double mtrs_Cor = 0.0;
-double mtrs_Trn = 0.0;
+double mtrs_Spd = 0.0; //Motors Speed +/-1.0
+double mtrs_Cor = 0.0; //Coorection to be added to A and subtracted from B to equalize at 0 turn
+double mtrs_Trn = 0.0; //Turn ratio.  Simple mult. complement by Spd and add to ASpd and minus BSpd.
 bool prtDiag = true;
 // Objects
-ScalePot potA = ScalePot(kMtrA_PotPin, 0.05); //Define function to read potentiometer and scale.
-ScalePot potB = ScalePot(kMtrB_PotPin); //Define function to read potentiometer and scale.
-MotorControl mtrA = MotorControl(kMtrA_FwdPin, kMtrA_RevPin, kMtrA_SpdPin, 0.55); //Motor A controller
+ScalePot potA = ScalePot(kMtrA_PotPin); //Potentiometer scaled +/-1.0 w/DB (default 0.10).
+ScalePot potB = ScalePot(kMtrB_PotPin, 0.05); //Potentiometer scaled +/-1.0 w/DB (default 0.10).
+MotorControl mtrA = MotorControl(kMtrA_FwdPin, kMtrA_RevPin, kMtrA_SpdPin, 0.45); //Motor A controller
 MotorControl mtrB = MotorControl(kMtrB_FwdPin, kMtrB_RevPin, kMtrB_SpdPin, 0.45); //Motor B controller
 
 void setup()
@@ -82,5 +84,5 @@ void loop()
  mtrB.cmdMotor(mtrs_Spd * (1.0 - mtrs_Trn) - mtrs_Cor);
     if(prtDiag) Serial.println();
 
- delay(1000);
+ delay(500);
 }
