@@ -16,3 +16,4 @@ One I know I <b>AM</b> the issue on one.  I didn't want to have a repo for each 
 .                   - Motor takes +/- 1.0.  MtrA<=Spd+rot+corr, mtrB<=Spd - Rot - Corr.
 .                   - Move minInput & minSig to MotorControl
 2022/06/13 Rev: 0.4a - Move inDB back to pot.  Motor scales 0.0+ - 1.0 to minOut to 1.0.
+2022/06/23 Rev. 0.5 - Add Swerve calcs to calculate commands, move & rotate.  Convert to motor commands.
