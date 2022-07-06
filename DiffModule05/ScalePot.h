@@ -1,4 +1,3 @@
-#line 1 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule05\\ScalePot.h"
 #ifndef ScalePot_h
 #define ScalePot_h
 

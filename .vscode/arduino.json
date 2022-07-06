@@ -1,6 +1,6 @@
 {
     "board": "arduino:avr:uno",
-    "sketch": "DiffModule04\\DiffModule04.ino",
+    "sketch": "DiffModule05\\DiffModule05.ino",
     "output": "build",
     "port": "COM10"
 }

@@ -1,5 +1,3 @@
-#include <Arduino.h>
-#line 1 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
 /*
  * Author: Jim Hofmann
  * History
@@ -10,6 +8,7 @@
  * <p>                   Motor takes +/- 1.0.  MtrA<=Spd+rot+corr, mtrB<=Spd - Rot - Corr.
  * <p>                   Move minInput & minSig to MotorControl
  * 2022/06/13 Rev: 0.4a - Move inDB back to pot.  Motor scales 0.0+ - 1.0 to minOut to 1.0.
+ * 2022/06/23 Rev. 0.5 - Add Swerve calcs to calculate commands, move & rotate.  Convert to motor commands.
  *
  * This is to test the differential swerve module motors and interaction.
  * It is 3d printed and mechanically not tight but good for demo purposes.
@@ -36,11 +35,6 @@ ScalePot potB = ScalePot(kMtrB_PotPin, 0.05);	//Potentiometer scaled +/-1.0 w/DB
 MotorControl mtrA = MotorControl(kMtrA_FwdPin, kMtrA_RevPin, kMtrA_SpdPin, 0.45);	//Motor A controller
 MotorControl mtrB = MotorControl(kMtrB_FwdPin, kMtrB_RevPin, kMtrB_SpdPin, 0.45);	//Motor B controller
 
-#line 37 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
-void setup();
-#line 49 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
-void loop();
-#line 37 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
 void setup()
 {
 	// put your setup code here, to run once:
@@ -72,5 +66,4 @@ void loop()
   
 	delay(500);
 }
-
 

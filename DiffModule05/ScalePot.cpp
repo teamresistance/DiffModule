@@ -1,4 +1,3 @@
-#line 1 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule05\\ScalePot.cpp"
 #include "ScalePot.h"
 
 /**

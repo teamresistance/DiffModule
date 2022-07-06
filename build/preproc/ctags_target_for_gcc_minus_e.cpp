@@ -1,4 +1,4 @@
-# 1 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
+# 1 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule05\\DiffModule05.ino"
 /*
 
  * Author: Jim Hofmann
@@ -19,6 +19,8 @@
 
  * 2022/06/13 Rev: 0.4a - Move inDB back to pot.  Motor scales 0.0+ - 1.0 to minOut to 1.0.
 
+ * 2022/06/23 Rev. 0.5 - Add Swerve calcs to calculate commands, move & rotate.  Convert to motor commands.
+
  *
 
  * This is to test the differential swerve module motors and interaction.
@@ -38,11 +40,11 @@
  * pwm, 25, to move the motor, 3 vdc to 255, 6 vdc.
 
  */
-# 21 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino"
+# 22 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule05\\DiffModule05.ino"
 // Include files & classes
-# 23 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino" 2
-# 24 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino" 2
-# 25 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule04\\DiffModule04.ino" 2
+# 24 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule05\\DiffModule05.ino" 2
+# 25 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule05\\DiffModule05.ino" 2
+# 26 "c:\\Users\\Hofmjc\\Documents\\_FRC\\DiffModule\\DiffModule05\\DiffModule05.ino" 2
 
 // Variables
 double mtrs_Spd = 0.0; //Motors Speed +/-1.0
