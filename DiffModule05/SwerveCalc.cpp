@@ -19,13 +19,13 @@ double * SwerveCalc::update(double potInSpd, double potInRot)
 {
 	if(potInRot > 0.0){
 		mtrCmd[0] = potInSpd;
-		mtrCmd[1] = mtrCmd[0] * (1.0 - mtrCmd[0]);
+		mtrCmd[1] = mtrCmd[0] * (1.0 - abs(potInRot));
 	}else{
 		mtrCmd[1] = potInSpd;
-		mtrCmd[0] = mtrCmd[1] * (1.0 - mtrCmd[0]);
+		mtrCmd[0] = mtrCmd[1] * (1.0 - abs(potInRot));
 	}
-
-	if(prtDiag){
+	
+	if(true){
 		Serial.print("Pot Spd:"); Serial.print(potInSpd);
 		Serial.print("\tPot Rot:"); Serial.print(potInRot);
 		Serial.println();

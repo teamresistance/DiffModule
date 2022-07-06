@@ -23,15 +23,18 @@
 #include "Constants.h"		//Includes pin assignments
 #include "ScalePot.h"		//Read pot and scale
 #include "MotorControl.h"	//Issue motor commands
+#include "SwerveCalc.h"		//Calc Motor A & B Speeds
 
 // Variables
 double mtrs_Spd = 0.0;	//Motors Speed +/-1.0
 double mtrs_Cor = 0.0;	//Coorection to be added to A and subtracted from B to equalize at 0 turn
 double mtrs_Trn = 0.0;	//Turn ratio.  Simple mult. complement by Spd and add to ASpd and minus BSpd.
 bool prtDiag = true;
+double * ptrMtrCmds;		//Pointer to a swerve motor cmds.
 // Objects
 ScalePot potA = ScalePot(kMtrA_PotPin);	//Potentiometer scaled +/-1.0 w/DB (default 0.10).
 ScalePot potB = ScalePot(kMtrB_PotPin, 0.05);	//Potentiometer scaled +/-1.0 w/DB (default 0.10).
+SwerveCalc rfSwerveMod = SwerveCalc();			//Swerve calcs for a swerve module
 MotorControl mtrA = MotorControl(kMtrA_FwdPin, kMtrA_RevPin, kMtrA_SpdPin, 0.45);	//Motor A controller
 MotorControl mtrB = MotorControl(kMtrB_FwdPin, kMtrB_RevPin, kMtrB_SpdPin, 0.45);	//Motor B controller
 
@@ -41,8 +44,9 @@ void setup()
 	Serial.begin(57600);
 	Serial.println("Hello!");
 
-	ScalePot::prtDiag = prtDiag;
+	// ScalePot::prtDiag = prtDiag;
 	MotorControl::prtDiag = prtDiag;
+	SwerveCalc::prtDiag = prtDiag;
 	delay(2000);
 
 }
@@ -50,20 +54,24 @@ void setup()
 void loop()
 {
 	// put your main code here, to run repeatedly:
+	//Read and scale the pot, direction & speed.
 	mtrs_Spd = potA.readPot();
-	if(prtDiag) Serial.print(" \t");
+	if(potA.prtDiag) Serial.print(" \t");
 	mtrs_Trn = potB.readPot();
-	if(prtDiag) Serial.println();
+	if(potB.prtDiag) Serial.println();
+	//Use Speed & turn to calculate motor power cmds.
+	ptrMtrCmds = rfSwerveMod.update(mtrs_Spd, mtrs_Trn);
+    if(rfSwerveMod.prtDiag) Serial.println();
+
 	//=================== Motor A =========================
-	//Read and scale the pot then issue motor cmds.  Direction & speed.
-	mtrA.cmdMotor(mtrs_Spd * (1.0 + mtrs_Trn) + mtrs_Cor);
-    if(prtDiag) Serial.print("  \t||\t  ");
+	mtrA.cmdMotor(ptrMtrCmds[0]);
+    if(mtrA.prtDiag) Serial.print("  \t||\t  ");
 
 	//=================== Motor B =========================
 	//Read and scale the pot then issue motor cmds.  Direction & speed.
-	mtrB.cmdMotor(mtrs_Spd * (1.0 - mtrs_Trn) - mtrs_Cor);
+	mtrB.cmdMotor(ptrMtrCmds[1]);
+
     if(prtDiag) Serial.println();
-  
 	delay(500);
 }
 

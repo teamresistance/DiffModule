@@ -13,4 +13,5 @@ c:\Users\Hofmjc\Documents\_FRC\DiffModule\build\sketch\DiffModule05.ino.cpp.o: \
  C:\Users\Hofmjc\AppData\Local\Arduino15\packages\arduino\hardware\avr\1.8.5\variants\standard/pins_arduino.h \
  c:\Users\Hofmjc\Documents\_FRC\DiffModule\build\sketch\Constants.h \
  c:\Users\Hofmjc\Documents\_FRC\DiffModule\build\sketch\ScalePot.h \
- c:\Users\Hofmjc\Documents\_FRC\DiffModule\build\sketch\MotorControl.h
+ c:\Users\Hofmjc\Documents\_FRC\DiffModule\build\sketch\MotorControl.h \
+ c:\Users\Hofmjc\Documents\_FRC\DiffModule\build\sketch\SwerveCalc.h

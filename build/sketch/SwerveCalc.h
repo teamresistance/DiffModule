@@ -16,7 +16,7 @@ class SwerveCalc
   private:
     double spdCmd; //Pot deaband, return 0.0,  Scale DB - 1.0 to 0.0 - 1.0.
     double rotCmd; //Pot deaband, return 0.0,  Scale DB - 1.0 to 0.0 - 1.0.
-    static double mtrCmd[2];  //[0] = A mtr, [1] = mtr B
+    double mtrCmd[2];  //[0] = A mtr, [1] = mtr B
 };
 
 #endif
