@@ -23,7 +23,7 @@ bool ScalePot::prtDiag = false;	 // Print diagnostics
  */
 double ScalePot::readPot() {
 	//=================== Motor X =========================
-	double pot_Sig = (analogRead(potPin)/512.0)  - 1.0;	// rescale from 0 - 1023 to -1.0 - +1.0
+	double pot_Sig = (analogRead(potPin)/511.0)  - 1.0;	// rescale from 0 - 1023 to -1.0 - +1.0
 	pot_Sig = abs(pot_Sig) < potDB ? 0.0 : constrain(pot_Sig, -1.0, 1.0);
 	pot_Sig = (abs(pot_Sig) - potDB) / (1.0 - potDB) * ((pot_Sig > 0.0) - (pot_Sig < 0.0));
 	if(prtDiag){

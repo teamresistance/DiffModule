@@ -65,13 +65,13 @@ void loop()
 
 	//=================== Motor A =========================
 	mtrA.cmdMotor(ptrMtrCmds[0]);
-    if(mtrA.prtDiag) Serial.print("  \t||\t  ");
+    if(mtrA.prtDiag) Serial.print("  \t\t||\t  ");
 
 	//=================== Motor B =========================
 	//Read and scale the pot then issue motor cmds.  Direction & speed.
 	mtrB.cmdMotor(ptrMtrCmds[1]);
 
-    if(prtDiag) Serial.println();
+    if(prtDiag) Serial.println("\n");
 	delay(500);
 }
 

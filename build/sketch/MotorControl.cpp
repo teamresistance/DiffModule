@@ -30,8 +30,8 @@ bool MotorControl::prtDiag = false;	 // Print diagnostics
  */
 void MotorControl::cmdMotor(double cmdIn){
   	// Controlling spin direction of motors:
-	if (cmdIn != 0.0)
-	{	// ---- NEQ. 0.0 ----
+	if (abs(cmdIn) > 0.01)
+	{	// ---- GT. 0.0 ----
 		bool tmpB = cmdIn > 0;
 		digitalWrite(fwdPin, tmpB);
 		digitalWrite(revPin, !tmpB);
@@ -39,6 +39,7 @@ void MotorControl::cmdMotor(double cmdIn){
 	}
 	else
 	{ // ---- EQ. 0.0 ----
+		cmdIn = 0.0;
 		digitalWrite(fwdPin, LOW);
 		digitalWrite(revPin, LOW);
 	}
@@ -47,7 +48,7 @@ void MotorControl::cmdMotor(double cmdIn){
 	analogWrite(sigPin, abs(cmdIn * 255)); // ENA pin
 
 	if(prtDiag){
-		Serial.print("    Fwd: ");
+		Serial.print("Fwd: ");
 		Serial.print(digitalRead(fwdPin));
 		Serial.print(" / Rev: ");
 		Serial.print(digitalRead(revPin));

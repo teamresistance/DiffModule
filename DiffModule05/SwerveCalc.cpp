@@ -28,7 +28,7 @@ double * SwerveCalc::update(double potInSpd, double potInRot)
 	if(true){
 		Serial.print("Pot Spd:"); Serial.print(potInSpd);
 		Serial.print("\tPot Rot:"); Serial.print(potInRot);
-		Serial.println();
+		Serial.print("\t||\t");
 		Serial.print("Mtr A cmd: "); Serial.print(mtrCmd[0]);
 		Serial.print("\tMtr B cmd: "); Serial.print(mtrCmd[1]);
 	}
